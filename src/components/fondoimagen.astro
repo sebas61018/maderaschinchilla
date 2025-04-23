@@ -1,0 +1,38 @@
+<!-- Fondo -->
+<img
+  src="/assets/principal/principal.png"
+  alt="Fondo carpintería"
+  class="absolute inset-0 w-full h-full object-cover brightness-75"
+/>
+
+<!-- Contenido encima -->
+<div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 bg-black/30 backdrop-brightness-90 scroll-reveal">
+  <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold drop-shadow-xl tracking-tight transition-all duration-1000 opacity-0 translate-y-6 reveal-hero">
+    Creando tu visión en madera
+  </h1>
+  <p class="text-white mt-3 text-lg md:text-xl font-medium drop-shadow-md transition-all duration-1000 opacity-0 translate-y-6 reveal-hero delay-[150ms]">
+    Servicios de carpintería a medida
+  </p>
+  <a
+    href="#contacto"
+    class="mt-6 bg-[#A67C52] text-white font-semibold px-6 py-2 rounded-full shadow-md hover:bg-[#8c6844] hover:scale-105 transition duration-300"
+  >
+    Contáctanos
+  </a>
+</div>
+
+<!-- Animación scroll -->
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const targets = document.querySelectorAll(".reveal-hero");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("opacity-100", "translate-y-0");
+        }
+      });
+    }, { threshold: 0.3 });
+
+    targets.forEach(el => observer.observe(el));
+  });
+</script>

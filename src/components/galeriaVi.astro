@@ -1,0 +1,98 @@
+---
+const galeriaDos = [
+  "/assets/panal/panal1.jpg",
+  "/assets/panal/panal2.jpg",
+  "/assets/panal/panal3.jpg",
+  "/assets/panal/panal4.jpg",
+  "/assets/panal/panal5.jpg",
+  "/assets/panal/panal6.jpg",
+  "/assets/panal/panal7.jpg",
+  "/assets/panal/panal8.jpg",
+  "/assets/panal/panal9.jpg"
+];
+---
+
+<!-- Galería 2 -->
+<section data-gallery="galeria2" class="py-12 px-4 flex flex-wrap justify-center gap-6 max-w-6xl mx-auto scroll-reveal">
+  {galeriaDos.map((src, i) => (
+    <div
+      class="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 transform rotate-45 overflow-hidden cursor-pointer transition-all duration-500 opacity-0 translate-y-8 reveal-hex"
+      data-src={src}
+      style={`animation-delay: ${i * 100}ms`}
+    >
+      <img
+        src={src}
+        alt="Hex img"
+        class="w-full h-full object-cover transform -rotate-45 hover:scale-110 transition duration-500 ease-in-out shadow-xl rounded-xl"
+      />
+    </div>
+  ))}
+</section>
+
+<!-- Modal 2 -->
+<div id="modal-galeria2" class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex items-center justify-center transition-all duration-500 ease-in-out">
+  <button data-close class="absolute top-4 right-6 text-white text-3xl font-bold">&times;</button>
+  <div class="relative w-full max-w-4xl px-6">
+    <img id="modalImage-galeria2" src="" alt="preview" class="rounded-lg mx-auto max-h-[80vh]" />
+    <div class="flex justify-between mt-4 text-white text-2xl px-4">
+      <button data-prev class="hover:text-gray-400">&larr;</button>
+      <button data-next class="hover:text-gray-400">&rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Scroll reveal
+    const hexItems = document.querySelectorAll(".reveal-hex");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("opacity-100", "translate-y-0");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    hexItems.forEach(el => observer.observe(el));
+
+    // Modal setup
+    function setupGallery(galleryName) {
+      const gallery = document.querySelector(`[data-gallery="${galleryName}"]`);
+      const items = Array.from(gallery.querySelectorAll('[data-src]'));
+      const modal = document.getElementById(`modal-${galleryName}`);
+      const modalImg = document.getElementById(`modalImage-${galleryName}`);
+      let currentIndex = 0;
+      const images = items.map(el => el.dataset.src);
+
+      function openModal(index) {
+        currentIndex = index;
+        modalImg.src = images[currentIndex];
+        modal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        modalImg.src = images[currentIndex];
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        modalImg.src = images[currentIndex];
+      }
+
+      items.forEach((el, index) => {
+        el.addEventListener('click', () => openModal(index));
+      });
+
+      modal.querySelector('[data-close]').addEventListener('click', closeModal);
+      modal.querySelector('[data-prev]').addEventListener('click', prevImage);
+      modal.querySelector('[data-next]').addEventListener('click', nextImage);
+    }
+
+    setupGallery('galeria2');
+  });
+</script>

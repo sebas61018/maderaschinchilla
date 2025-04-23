@@ -1,0 +1,46 @@
+---
+// Componente Astro con scroll reveal
+export interface Props {
+  title: string;
+  description: string;
+  imageUrl: string;
+  reverse?: boolean;
+}
+
+const { title, description, imageUrl, reverse = false } = Astro.props;
+---
+
+<!-- Contenedor con animación al hacer scroll -->
+<div 
+  class={`max-w-7xl mx-auto py-12 md:py-16 lg:py-20 px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-b border-gray-200 
+  transition-all duration-1000 opacity-0 translate-y-8 scroll-reveal`}
+>
+  <div class={`overflow-hidden rounded-lg shadow-lg ${reverse ? 'md:order-2' : ''}`}>
+    <img src={imageUrl} alt={title} class="object-cover w-full max-h-[500px]" />
+  </div>
+
+  <div class={`text-center md:text-left ${reverse ? 'md:order-1 md:border-r md:pr-8' : 'md:border-l md:pl-8'} border-gray-200`}>
+    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 border-gray-300 inline-block pb-2">{title}</h2>
+    <p class="text-gray-600 leading-relaxed text-base md:text-lg">{description}</p>
+  </div>
+</div>
+
+<!-- Script JS directamente incrustado -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const revealElements = document.querySelectorAll(".scroll-reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("opacity-100", "translate-y-0");
+          entry.target.classList.remove("opacity-0", "translate-y-8");
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+  });
+</script>

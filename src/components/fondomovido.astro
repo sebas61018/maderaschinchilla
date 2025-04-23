@@ -1,0 +1,61 @@
+<section
+  class="relative h-[300px] md:h-[350px] lg:h-[400px] flex items-center justify-center overflow-hidden scroll-reveal"
+>
+  <!-- Imagen de fondo -->
+  <img
+    src="/assets/parallax/fondoParallax.png"
+    alt="Fondo carpintería"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+
+  <!-- Gradiente oscuro para contraste -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/60 z-10"
+  >
+  </div>
+
+  <!-- Contenido centrado -->
+  <div
+    class="relative z-20 text-white px-6 max-w-3xl text-center opacity-100 translate-y-0 transition-all duration-1000"
+  >
+    <h2
+      class="text-3xl md:text-4xl font-extrabold mb-3 uppercase tracking-wide"
+    >
+      ¿Cómo podemos ayudarle?
+    </h2>
+    <p class="text-base md:text-lg mb-5 leading-relaxed">
+      Creamos cocinas, closets y muebles únicos que combinan diseño y
+      funcionalidad.<br />
+      En <span class="font-semibold text-[#E0B27A]">Madera Chinchilla</span>, tu
+      hogar es nuestro mejor proyecto.
+    </p>
+    <a
+      href="#contacto"
+      class="inline-block bg-white text-[#A67C52] font-semibold px-6 py-2 rounded-full shadow-lg transition duration-300 ease-in-out
+         hover:bg-[#A67C52] hover:text-white"
+    >
+      Contáctanos
+    </a>
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const reveal = document.querySelector(".scroll-reveal");
+    const content = reveal.querySelector(".relative.z-20");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            content.classList.add("opacity-100", "translate-y-0");
+            content.classList.remove("opacity-0", "translate-y-8");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(reveal);
+  });
+</script>
