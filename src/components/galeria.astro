@@ -1,109 +1,197 @@
 ---
 const galeriaUno = [
   {
-    title: "NN",
-    description: "NN",
+    title: "Centro de Entretenimiento Moderno",
+    description: "Diseño en madera y mármol que aporta elegancia y sofisticación a la sala. Incluye iluminación LED integrada y espacios funcionales para organizar dispositivos, logrando un ambiente moderno y ordenado.",
     imageUrl: "/assets/galeria/galeria1.jpg"
   },
   {
-    title: "NN",
-    description: "NN",
+    title: "Cocina Integral con Techo de Madera",
+    description: "Cocina contemporánea con acabados oscuros y detalles en madera natural. Su iluminación cálida y diseño de líneas rectas crean un espacio sofisticado y acogedor para compartir en familia.",
     imageUrl: "/assets/galeria/galeria2.jpg"
   },
   {
-    title: "NN",
-    description: "NN",
+    title: "Cocina Integral con Iluminación Decorativa",
+    description: "Diseño moderno que combina muebles en tonos claros con detalles en madera. La iluminación LED perimetral resalta la estructura y aporta amplitud, mientras que la isla central ofrece mayor funcionalidad y estilo.",
     imageUrl: "/assets/galeria/galeria3.jpg"
   },
   {
-    title: "NN",
-    description: "NN",
+    title: "Isla de Cocina en Madera y Blanco",
+    description: "Isla funcional y minimalista que combina acabados en madera natural con cubierta blanca. Ideal como superficie de trabajo y espacio social, integrándose con calidez y estilo en cualquier cocina moderna.",
     imageUrl: "/assets/galeria/galeria5.jpg"
   }
 ];
 ---
 
-<section data-gallery="galeria1" class="max-w-7xl mx-auto py-12 px-6 md:py-16 lg:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-  {galeriaUno.map((item) => (
-    <div 
-      class="text-center space-y-4 cursor-pointer opacity-0 translate-y-8 transition-all duration-700 ease-in-out scroll-reveal hover:scale-[1.03] hover:shadow-2xl"
+<section
+  data-gallery="galeria1"
+  class="max-w-7xl mx-auto py-12 px-6 md:py-16 lg:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+>
+  {galeriaUno.map((item, i) => (
+    <div
+      class="group relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-200/70 shadow-sm hover:shadow-xl transition-all duration-500 ease-out cursor-pointer opacity-0 translate-y-6 scroll-reveal"
+      style={`transition-delay:${i * 90}ms`}
       data-src={item.imageUrl}
     >
-      <img 
-        src={item.imageUrl} 
-        alt={item.title} 
-        class="object-cover rounded-xl shadow-lg h-[300px] w-full transition-transform duration-500 ease-in-out"
-      />
-      <h3 class="text-xl font-bold text-gray-800 uppercase">{item.title}</h3>
-      <p class="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+      <div class="aspect-[4/3] overflow-hidden">
+        <img
+          src={item.imageUrl}
+          alt={item.title}
+          class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="px-5 pt-5 pb-6 text-center">
+        <h3
+          class="text-[1.15rem] md:text-xl font-semibold text-gray-900/90 leading-snug tracking-tight text-balance"
+        >
+          {item.title}
+        </h3>
+
+        <div
+          class="mx-auto mt-2 h-0.5 w-12 rounded-full bg-amber-500/80 group-hover:w-16 transition-all"
+        ></div>
+
+        <p
+          class="mt-3 text-sm md:text-[15px] text-gray-600/90 leading-relaxed tracking-[0.01em] text-pretty line-clamp-3"
+        >
+          {item.description}
+        </p>
+      </div>
     </div>
   ))}
 </section>
 
 <!-- Modal -->
-<div id="modal-galeria1" class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex items-center justify-center">
-  <button data-close class="absolute top-4 right-6 text-white text-3xl font-bold">&times;</button>
-  <div class="relative w-full max-w-4xl px-6">
-    <img id="modalImage-galeria1" src="" alt="preview" class="rounded-lg mx-auto max-h-[80vh]" />
+<div
+  id="modal-galeria1"
+  class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center"
+>
+  <button
+    data-close
+    class="absolute top-5 right-6 text-white/90 text-3xl font-bold hover:scale-110 transition"
+    aria-label="Cerrar"
+  >&times;</button>
+
+  <div
+    class="relative w-full max-w-4xl px-6 opacity-0 scale-95 transition-all duration-300 ease-out will-change-transform"
+    data-modal-body
+  >
+    <img
+      id="modalImage-galeria1"
+      src=""
+      alt="preview"
+      class="rounded-lg mx-auto max-h-[80vh] shadow-2xl"
+    />
     <div class="flex justify-between mt-4 text-white text-2xl px-4">
-      <button data-prev class="hover:text-gray-400">&larr;</button>
-      <button data-next class="hover:text-gray-400">&rarr;</button>
+      <button data-prev class="hover:text-gray-300 px-3 py-1 rounded">⟵</button>
+      <button data-next class="hover:text-gray-300 px-3 py-1 rounded">⟶</button>
     </div>
   </div>
 </div>
 
+<style>
+  /* Si no usas el plugin de line-clamp de Tailwind, activa este fallback: */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Mejoras de legibilidad en títulos y párrafos */
+  .text-balance {
+    text-wrap: balance; /* reparte mejor las líneas del título */
+  }
+  .text-pretty {
+    text-wrap: pretty; /* evita cortes feos en el cuerpo */
+    hyphens: auto; /* guiones automáticos cuando sea necesario */
+  }
+</style>
+
 <script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
+    // Scroll reveal + stagger
     const revealElements = document.querySelectorAll(".scroll-reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-6");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    revealElements.forEach((el) => observer.observe(el));
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          entry.target.classList.remove("opacity-0", "translate-y-8");
-        }
-      });
-    }, { threshold: 0.1 });
-
-    revealElements.forEach(el => observer.observe(el));
-
+    // Gallery + modal
     function setupGallery(galleryName) {
-      const gallery = document.querySelector(`[data-gallery="${galleryName}"]`);
-      const items = Array.from(gallery.querySelectorAll('[data-src]'));
+      const gallery = document.querySelector(
+        `[data-gallery="${galleryName}"]`
+      );
+      const items = Array.from(gallery.querySelectorAll("[data-src]"));
       const modal = document.getElementById(`modal-${galleryName}`);
+      const modalBody = modal.querySelector("[data-modal-body]");
       const modalImg = document.getElementById(`modalImage-${galleryName}`);
-      let currentIndex = 0;
-      const images = items.map(el => el.dataset.src);
 
-      function openModal(index) {
+      let currentIndex = 0;
+      const images = items.map((el) => el.dataset.src);
+
+      const openModal = (index) => {
         currentIndex = index;
         modalImg.src = images[currentIndex];
-        modal.classList.remove('hidden');
-      }
+        modal.classList.remove("hidden");
+        // pequeña animación de zoom/fade
+        requestAnimationFrame(() => {
+          modalBody.classList.remove("opacity-0", "scale-95");
+          modalBody.classList.add("opacity-100", "scale-100");
+        });
+        // bloqueo de scroll
+        document.documentElement.style.overflow = "hidden";
+      };
 
-      function closeModal() {
-        modal.classList.add('hidden');
-      }
+      const closeModal = () => {
+        modalBody.classList.add("opacity-0", "scale-95");
+        modalBody.classList.remove("opacity-100", "scale-100");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          document.documentElement.style.overflow = "";
+        }, 220);
+      };
 
-      function prevImage() {
+      const prevImage = () => {
         currentIndex = (currentIndex - 1 + images.length) % images.length;
         modalImg.src = images[currentIndex];
-      }
+      };
 
-      function nextImage() {
+      const nextImage = () => {
         currentIndex = (currentIndex + 1) % images.length;
         modalImg.src = images[currentIndex];
-      }
+      };
 
-      items.forEach((el, index) => {
-        el.addEventListener('click', () => openModal(index));
+      items.forEach((el, index) =>
+        el.addEventListener("click", () => openModal(index))
+      );
+      modal.querySelector("[data-close]").addEventListener("click", closeModal);
+      modal.querySelector("[data-prev]").addEventListener("click", prevImage);
+      modal.querySelector("[data-next]").addEventListener("click", nextImage);
+
+      // Cerrar con fondo o tecla ESC
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
       });
-
-      modal.querySelector('[data-close]').addEventListener('click', closeModal);
-      modal.querySelector('[data-prev]').addEventListener('click', prevImage);
-      modal.querySelector('[data-next]').addEventListener('click', nextImage);
+      document.addEventListener("keydown", (e) => {
+        if (modal.classList.contains("hidden")) return;
+        if (e.key === "Escape") closeModal();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "ArrowRight") nextImage();
+      });
     }
 
-    setupGallery('galeria1');
+    setupGallery("galeria1");
   });
 </script>
